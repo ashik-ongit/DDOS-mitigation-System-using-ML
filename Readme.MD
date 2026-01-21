@@ -1,187 +1,178 @@
-🛡️ ShieldX — Machine Learning–Based DDoS Mitigation System
-ShieldX is a software‑defined, machine learning–based DDoS mitigation system designed to detect and mitigate application‑layer and volumetric attacks in real time.
-It operates as a reverse proxy, dynamically analyzing traffic behavior, blocking malicious sources, and maintaining backend service availability.
+# 🛡️ ShieldX — Machine Learning–Based DDoS Mitigation System
 
-🚀 Key Highlights
-✅ Machine Learning + Statistical anomaly detection
+ShieldX is a **software‑defined, machine learning–based DDoS mitigation system**
+that detects and mitigates application‑layer and volumetric attacks in real time.
+It operates as a **reverse proxy** in front of a protected backend server.
 
-✅ Real‑time traffic monitoring (RPS, bursts, behavior)
+---
 
-✅ Automatic IP mitigation with escalating ban durations
+## 🚀 Key Highlights
 
-✅ Dynamic attack signature generation
+- Machine Learning + Statistical anomaly detection  
+- Real‑time traffic monitoring (RPS, bursts, behavior)  
+- Automatic IP mitigation with escalating ban durations  
+- Dynamic attack signature generation  
+- Persistent IP reputation memory  
+- System health monitoring (Mitigator + Backend)  
+- Live visualization dashboard  
+- Built‑in traffic simulation framework  
 
-✅ Persistent IP reputation memory
+---
 
-✅ System health monitoring (Mitigator + Backend)
+## 🧠 System Architecture
 
-✅ Live visualization dashboard
+Client
+|
+v
+ShieldX Mitigator (Flask Proxy)
+|-- Feature Extraction
+|-- ML + Statistical Detection
+|-- Auto Mitigation & Signatures
+|
+v
+Backend Server
 
-✅ Built‑in traffic simulation framework
 
-🧠 System Architecture
-[ Client Traffic ]
-        |
-        v
-[ ShieldX Mitigator (Flask Proxy) ]
-        |
-        |-- Feature Extraction
-        |-- ML + Statistical Detection
-        |-- Auto Mitigation & Signatures
-        |
-        v
-[ Backend Application Server ]
-⚙️ How ShieldX Works
-Traffic Interception
-All incoming requests pass through the ShieldX proxy before reaching the backend server.
+---
 
-Feature Extraction
-Behavioral features are extracted per IP:
+## ⚙️ How ShieldX Works
 
-Requests per second (RPS)
+### 1️⃣ Traffic Interception
+All incoming requests first pass through the ShieldX proxy before reaching the backend server.
 
-Burst intensity
+### 2️⃣ Feature Extraction
+The system extracts behavioral features per IP:
+- Requests per second (RPS)
+- Burst intensity
+- Unique endpoint ratio
+- Inter‑request gap
+- Error rate
 
-Unique endpoint ratio
-
-Inter‑request gap
-
-Error rate
-
-Anomaly Detection
+### 3️⃣ Anomaly Detection
 Traffic is analyzed using:
+- Machine‑learning‑based anomaly detection  
+- Statistical threshold checks  
 
-Machine‑learning–based anomaly detection
+### 4️⃣ Mitigation & Signature Generation
+- Malicious IPs are automatically blocked  
+- Ban duration increases for repeat offenders  
+- Behavioral attack signatures are generated dynamically  
 
-Statistical threshold checks
+### 5️⃣ Monitoring & Visualization
+A live dashboard visualizes traffic rate, blocked attacks, signatures, and system health.
 
-Mitigation & Signature Generation
+---
 
-Malicious IPs are automatically blocked
+## 🩺 System Health Monitoring
 
-Ban duration escalates for repeat offenders
+### Layer 1 — Mitigator Health
+- Service status  
+- Uptime  
+- Current RPS  
+- Number of blocked IPs  
 
-Behavioral attack signatures are generated and updated dynamically
+### Layer 2 — Backend Health
+- Continuous reachability check to the backend server  
 
-Monitoring & Visualization
-A live dashboard displays traffic metrics, blocked attacks, attack signatures, and system health.
+---
 
-🩺 System Health Monitoring
-ShieldX exposes two layers of health monitoring:
+## 🧪 Simulation Framework
 
-Layer 1 — Mitigator Health
-Service status
+ShieldX includes a lightweight **traffic simulation framework** that:
+- Simulates normal user traffic  
+- Generates flood / burst attacks  
+- Supports multi‑IP simulation  
+- Enables evaluation of mitigation behavior  
 
-Uptime
+---
 
-Current RPS
+## 📊 Dashboard
 
-Number of blocked IPs
+The Streamlit dashboard provides:
+- Real‑time RPS charts  
+- Total attacks blocked  
+- Attack signature visualization  
+- Manual IP block / unblock  
+- System connectivity status  
 
-Layer 2 — Backend Health
-Continuous reachability check of the protected backend server
+---
 
-This ensures both the protection layer and application server are monitored.
+## 🧰 Tech Stack
 
-🧪 Simulation Framework
-ShieldX includes a lightweight traffic simulation framework for evaluation purposes:
+### Frontend
+- Streamlit (real‑time charts & JSON visualization)
 
-Simulates normal user traffic
+### Backend / Mitigation Layer
+- Python  
+- Flask (Reverse Proxy)
 
-Generates flood / burst attack traffic
+### Machine Learning
+- scikit‑learn (Isolation Forest / anomaly detection)
 
-Supports multi‑IP simulation using headers
+### Simulation
+- Python‑based traffic simulator  
+- Curl‑based flood generation  
 
-Enables observation of mitigation behavior and system stability
+### Storage
+- JSON‑based persistent memory (`ip_memory.json`)
 
-This framework is suitable for academic and prototype‑level evaluation.
+---
 
-📊 Dashboard
-The Streamlit‑based dashboard provides:
+## 📁 Project Structure
 
-Real‑time RPS visualization
-
-Total attacks blocked
-
-Attack signature inspection
-
-Manual IP block / unblock controls
-
-System connectivity status
-
-🧰 Tech Stack
-Frontend
-Streamlit
-
-Real‑time charts
-
-JSON visualization
-
-Backend / Mitigation Layer
-Python
-
-Flask (Reverse Proxy)
-
-Machine Learning
-scikit‑learn
-
-Isolation Forest / anomaly detection logic
-
-Simulation
-Python‑based traffic simulator
-
-Curl‑based request flooding
-
-Storage
-JSON‑based persistent memory (ip_memory.json)
-
-📁 Project Structure
 .
-├── mitigator.py        # Core DDoS mitigation proxy
-├── dashboard.py        # Streamlit monitoring dashboard
-├── simulator.py        # Traffic simulation framework
-├── features.py         # Traffic feature extraction
-├── ml_detector.py      # ML-based attack detection
-├── stat_guard.py       # Statistical detection rules
-├── metrics.py          # Real-time metrics collection
-├── ip_memory.json      # Persistent IP reputation store
+├── mitigator.py
+├── dashboard.py
+├── simulator.py
+├── features.py
+├── ml_detector.py
+├── stat_guard.py
+├── metrics.py
+├── ip_memory.json
 └── README.md
-▶️ How to Run
-1️⃣ Start Backend Server (example)
+
+
+---
+
+## ▶️ How to Run
+
+### Start Backend Server
+```bash
 python -m http.server 5000
-2️⃣ Run ShieldX Mitigator
+Run ShieldX Mitigator
 python mitigator.py
-3️⃣ Launch Dashboard
+Launch Dashboard
 streamlit run dashboard.py
-4️⃣ (Optional) Run Traffic Simulator
+Run Simulator (Optional)
 python simulator.py
 📈 Evaluation & Benchmarking
-ShieldX is conceptually benchmarked against traditional appliance‑based DDoS mitigation solutions.
+ShieldX is compared conceptually against traditional appliance‑based DDoS mitigation systems.
 
-Aspect	ShieldX	Traditional Appliances
+Feature	ShieldX	Traditional Appliances
 Deployment	Software‑based	Hardware
 Cost	Low	Very High
-Detection	ML + Behavioral	Mostly Rule‑based
+Detection	ML + Behavioral	Rule‑based
 Adaptability	High	Limited
-Visibility	Full Metrics	Limited
-Scalability	Horizontal	Fixed
+Visibility	Full metrics	Limited
 🌟 Novelty & USP
-Behavior‑based mitigation instead of static rule enforcement
+Behavior‑based DDoS mitigation
 
 Dynamic attack signature generation
 
-Persistent learning from historical attacks
+Persistent learning from past attacks
 
-Lightweight, low‑cost alternative to hardware appliances
+Lightweight alternative to hardware appliances
 
 🔮 Future Work
-Kernel‑level packet filtering (eBPF)
+Kernel‑level filtering (eBPF)
 
 Signature‑based pre‑blocking
 
 Large‑scale distributed deployment
 
-Advanced latency analysis
+✅ Conclusion
+ShieldX demonstrates how machine learning and behavioral analysis
+can be used to build an adaptive, low‑cost DDoS mitigation system
+while maintaining service availability during attacks.
 
-📌 Conclusion
-ShieldX demonstrates how machine learning and behavioral analysis can be effectively applied to build an adaptive, low‑cost DDoS mitigation system capable of maintaining service availability under attack conditions.
+
